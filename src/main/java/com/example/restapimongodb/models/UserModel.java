@@ -2,27 +2,44 @@ package com.example.restapimongodb.models;
 
 import org.springframework.data.annotation.Id;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 public class UserModel {
 
     @Id
     private int id;
+
+    @NotBlank(message = "Enter a last name")
     private String lastName;
+
+    @NotBlank(message = "Enter a first name")
     private String firstName;
+
+    @Email
     private String email;
+
+    @NotBlank(message = "Enter a username")
     private String username;
+
+    @NotBlank()
+    @Min(8)
     private String pasword;
+
     private String role;
 
     public UserModel(){}
 
-    public UserModel(int id, String lastName, String firstName, String email, String username, String pasword, String role) {
+    public UserModel(int id, String lastName, String firstName, String email, String username, String pasword) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
         this.email = email;
         this.username = username;
         this.pasword = pasword;
-        this.role = role;
+        this.role = "user";
     }
 
     public int getId() {

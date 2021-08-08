@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collections;
 
 
@@ -39,7 +40,7 @@ public class UserController {
     @PostMapping(value = "/users", consumes = {
             MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity createUser(@RequestBody UserModel user){
+    public ResponseEntity createUser(@Valid @RequestBody UserModel user){
         var customResponse = new CustomizedResponse("Create a new user ", Collections.singletonList(service.createUser(user)));
         return new ResponseEntity(customResponse, HttpStatus.OK);
     }

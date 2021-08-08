@@ -9,8 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collections;
-
 
 @RestController
 public class MovieController {
@@ -60,7 +60,7 @@ public class MovieController {
     @PutMapping(value = "/movies/{id}", consumes = {
             MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity updateMovie(@PathVariable("id") int id, @RequestBody Movie newMovie) {
+    public ResponseEntity updateMovie(@PathVariable("id") int id, @Valid @RequestBody Movie newMovie) {
         CustomizedResponse customResponse = null;
         try {
             customResponse = new CustomizedResponse("Update a  movie with ID " + id, Collections.singletonList(service.updateMovie(id, newMovie)));
@@ -69,8 +69,6 @@ public class MovieController {
             return new ResponseEntity(customResponse,HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(customResponse, HttpStatus.OK);
-
-
     }
 
     @DeleteMapping("/movies/{id}")
