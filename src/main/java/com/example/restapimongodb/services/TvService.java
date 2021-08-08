@@ -66,7 +66,8 @@ public class TvService {
         tv.get().setRating(newTv.getRating());
         tv.get().setRelease_date(newTv.getRelease_date());
         tv.get().setTitle(newTv.getTitle());
-        tv.get().setType(newTv.getTitle());
+        tv.get().setType(newTv.getType());
+        tv.get().setRent(newTv.getRent());
 
         Tv updatedTvShow = repository.save(tv.get());
         return updatedTvShow;

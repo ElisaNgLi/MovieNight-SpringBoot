@@ -67,7 +67,8 @@ public class MovieService {
         movie.get().setRating(newMovie.getRating());
         movie.get().setRelease_date(newMovie.getRelease_date());
         movie.get().setTitle(newMovie.getTitle());
-        movie.get().setType(newMovie.getTitle());
+        movie.get().setType(newMovie.getType());
+        movie.get().setRent(newMovie.getRent());
 
         Movie updatedMovie = repository.save(movie.get());
         return updatedMovie;

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -62,6 +63,12 @@ public class MovieController {
     })
     public ResponseEntity updateMovie(@PathVariable("id") int id, @Valid @RequestBody Movie newMovie) {
         CustomizedResponse customResponse = null;
+
+        if(newMovie.getFeature() == null || newMovie.getTitle() == null || newMovie.getBackdrop_path() == null || newMovie.getBuy() == 0 || newMovie.getGenre() == null || newMovie.getRating() == 0 || newMovie.getRent() == 0 || newMovie.getType() == null || newMovie.getPoster_path() == null || newMovie.getOverview() == null || newMovie.getRelease_date() == null){
+            customResponse = new CustomizedResponse("Missing fields", null);
+            return new ResponseEntity(customResponse, HttpStatus.BAD_REQUEST);
+        }
+
         try {
             customResponse = new CustomizedResponse("Update a  movie with ID " + id, Collections.singletonList(service.updateMovie(id, newMovie)));
         } catch (Exception e) {
@@ -76,12 +83,19 @@ public class MovieController {
         CustomizedResponse customResponse = null;
 
         try {
-            customResponse = new CustomizedResponse("Movie with id "+ id, Collections.singletonList(service.deleteMovie(id)));
+            customResponse = new CustomizedResponse("Movie with id "+ id + " deleted", Collections.singletonList(service.deleteMovie(id)));
         } catch (Exception e) {
             customResponse = new CustomizedResponse(e.getMessage(), null);
             return new ResponseEntity(customResponse,HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(customResponse,HttpStatus.OK);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public CustomizedResponse handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        var customResponse = new CustomizedResponse(ex.getMessage(), null);
+        return customResponse;
+    }
 }

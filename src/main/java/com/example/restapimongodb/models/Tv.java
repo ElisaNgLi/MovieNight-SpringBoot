@@ -3,21 +3,49 @@ package com.example.restapimongodb.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Document("tv")
 public class Tv {
 
     @Id
     private int id;
+    @NotBlank(message = "Enter a backdrop")
     private String backdrop_path;
+
+    @NotBlank(message = "Enter a genre")
     private String genre;
+
+    @NotBlank(message = "Enter a title")
     private String title;
+
+    @NotBlank(message = "Enter an overview")
     private String overview;
+
+    @NotBlank(message = "Enter a poster")
     private String poster_path;
+
+    @NotBlank(message = "Enter a date")
     private String release_date;
+
+    @NotNull(message = "Enter a rating")
+    @Min(1)
     private double rating;
+
+    @NotNull(message = "Enter a rent price")
+    @Min(1)
     private double rent;
+
+    @NotNull(message = "Enter a purchase price")
+    @Min(1)
     private double buy;
+
+    @NotBlank(message = "Enter a type")
     private String type;
+
+    @NotNull(message = "is it feature?")
     private Boolean feature;
 
     public Tv(){}

@@ -3,6 +3,7 @@ package com.example.restapimongodb.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -31,12 +32,15 @@ public class Movie {
     private String release_date;
 
     @NotNull(message = "Enter a rating")
+    @Min(1)
     private double rating;
 
     @NotNull(message = "Enter a rent price")
+    @Min(1)
     private double rent;
 
     @NotNull(message = "Enter a purchase price")
+    @Min(1)
     private double buy;
 
     @NotBlank(message = "Enter a type")

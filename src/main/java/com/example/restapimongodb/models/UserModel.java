@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 public class UserModel {
 
@@ -13,15 +12,19 @@ public class UserModel {
     private int id;
 
     @NotBlank(message = "Enter a last name")
+    @Min(2)
     private String lastName;
 
     @NotBlank(message = "Enter a first name")
+    @Min(2)
     private String firstName;
 
     @Email
+    @NotBlank(message = "Enter an email")
     private String email;
 
     @NotBlank(message = "Enter a username")
+    @Min(3)
     private String username;
 
     @NotBlank()

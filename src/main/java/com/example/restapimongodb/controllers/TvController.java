@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.List;
 
 @RestController
 public class TvController {
@@ -60,11 +60,15 @@ public class TvController {
     @PutMapping(value = "/tv/{id}", consumes = {
             MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity updateMovie(@PathVariable("id") int id,@RequestBody Tv newTv)
+    public ResponseEntity updateTvShow(@PathVariable("id") int id,@RequestBody Tv newTv)
     {
         CustomizedResponse customResponse = null;
+        if(newTv.getFeature() == null || newTv.getTitle() == null || newTv.getBackdrop_path() == null || newTv.getBuy() == 0 || newTv.getGenre() == null || newTv.getRating() == 0 || newTv.getRent() == 0 || newTv.getType() == null || newTv.getPoster_path() == null || newTv.getOverview() == null || newTv.getRelease_date() == null){
+            customResponse = new CustomizedResponse("Missing fields", null);
+            return new ResponseEntity(customResponse, HttpStatus.BAD_REQUEST);
+        }
         try {
-            customResponse = new CustomizedResponse("Tv Show with id " + id, Collections.singletonList(service.updateTv(id, newTv)));
+            customResponse = new CustomizedResponse("Tv Show with id " + id + " updated", Collections.singletonList(service.updateTv(id, newTv)));
         } catch (Exception e) {
             customResponse = new CustomizedResponse(e.getMessage(), null);
             return new ResponseEntity(customResponse,HttpStatus.NOT_FOUND);
@@ -74,16 +78,24 @@ public class TvController {
     }
 
     @DeleteMapping("/tv/{id}")
-    public ResponseEntity deleteMovie(@PathVariable("id") int id){
+    public ResponseEntity deleteTvShow(@PathVariable("id") int id){
         CustomizedResponse customResponse = null;
 
         try {
-            customResponse = new CustomizedResponse("Tv Show with id "+ id, Collections.singletonList(service.deleteTv(id)));
+            customResponse = new CustomizedResponse("Tv Show with id "+ id + " deleted", Collections.singletonList(service.deleteTv(id)));
         } catch (Exception e) {
             customResponse = new CustomizedResponse(e.getMessage(), null);
             return new ResponseEntity(customResponse,HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(customResponse,HttpStatus.OK);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public CustomizedResponse handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        var customResponse = new CustomizedResponse(ex.getMessage(), null);
+        return customResponse;
     }
 
 }
