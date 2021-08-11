@@ -24,7 +24,7 @@ public class MovieService {
         return repository.findAll();
     }
 
-    public Optional<Movie> getMovieByID(int id) throws Exception {
+    public Optional<Movie> getMovieByID(String id) throws Exception {
         Optional<Movie> movie = repository.findById(id);
         if(!movie.isPresent()){
             throw new Exception("Movie " + id + " not found");
@@ -42,7 +42,7 @@ public class MovieService {
     public List<Movie> getFeatureMovies(Boolean feature){
 
         Query query = new Query();
-        query.addCriteria(Criteria.where("feature").is(true));
+        query.addCriteria(Criteria.where("feature").is(feature));
         List<Movie> movies = mongoTemplate.find(query, Movie.class);
         return movies;
     }
@@ -51,7 +51,7 @@ public class MovieService {
         repository.insert(movie);
     }
 
-    public Movie updateMovie(int id, Movie newMovie) throws Exception {
+    public Movie updateMovie(String id, Movie newMovie) throws Exception {
         Optional<Movie> movie = repository.findById(id);
 
         if(!movie.isPresent()){
@@ -74,7 +74,7 @@ public class MovieService {
         return updatedMovie;
     }
 
-    public Optional<Movie> deleteMovie(int id) throws Exception{
+    public Optional<Movie> deleteMovie(String id) throws Exception{
         Optional<Movie> movie = repository.findById(id);
         if(!movie.isPresent()){
             throw new Exception("Movie " + id + " not found");

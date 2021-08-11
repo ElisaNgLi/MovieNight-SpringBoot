@@ -27,7 +27,7 @@ public class MovieController {
     }
 
     @GetMapping("/movies/{id}")
-    public ResponseEntity getMoviesByID(@PathVariable("id") int id){
+    public ResponseEntity getMoviesByID(@PathVariable("id") String id){
         CustomizedResponse customResponse = null;
         try {
             customResponse = new CustomizedResponse("Movie with id " + id, Collections.singletonList(service.getMovieByID(id)));
@@ -62,7 +62,7 @@ public class MovieController {
     @PutMapping(value = "/movies/{id}", consumes = {
             MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity updateMovie(@PathVariable("id") int id, @Valid @RequestBody Movie newMovie) {
+    public ResponseEntity updateMovie(@PathVariable("id") String id, @Valid @RequestBody Movie newMovie) {
         CustomizedResponse customResponse = null;
 
         if(newMovie.getFeature() == null || newMovie.getTitle() == null || newMovie.getBackdrop_path() == null || newMovie.getBuy() == 0 || newMovie.getGenre() == null || newMovie.getRating() == 0 || newMovie.getRent() == 0 || newMovie.getType() == null || newMovie.getPoster_path() == null || newMovie.getOverview() == null || newMovie.getRelease_date() == null){
@@ -80,7 +80,7 @@ public class MovieController {
     }
 
     @DeleteMapping("/movies/{id}")
-    public ResponseEntity deleteMovie(@PathVariable("id") int id){
+    public ResponseEntity deleteMovie(@PathVariable("id") String id){
         CustomizedResponse customResponse = null;
 
         try {

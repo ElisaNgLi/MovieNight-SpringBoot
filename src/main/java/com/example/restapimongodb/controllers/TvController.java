@@ -27,7 +27,7 @@ public class TvController {
     }
 
     @GetMapping("/tv/{id}")
-    public ResponseEntity getTvByID(@PathVariable("id") int id){
+    public ResponseEntity getTvByID(@PathVariable("id") String id){
         CustomizedResponse customResponse = null;
         try {
             customResponse = new CustomizedResponse("Tv Show with id " + id, Collections.singletonList(service.getTvByID(id)));
@@ -61,7 +61,7 @@ public class TvController {
     @PutMapping(value = "/tv/{id}", consumes = {
             MediaType.APPLICATION_JSON_VALUE
     })
-    public ResponseEntity updateTvShow(@PathVariable("id") int id,@RequestBody Tv newTv)
+    public ResponseEntity updateTvShow(@PathVariable("id") String id,@RequestBody Tv newTv)
     {
         CustomizedResponse customResponse = null;
         if(newTv.getFeature() == null || newTv.getTitle() == null || newTv.getBackdrop_path() == null || newTv.getBuy() == 0 || newTv.getGenre() == null || newTv.getRating() == 0 || newTv.getRent() == 0 || newTv.getType() == null || newTv.getPoster_path() == null || newTv.getOverview() == null || newTv.getRelease_date() == null){
@@ -79,7 +79,7 @@ public class TvController {
     }
 
     @DeleteMapping("/tv/{id}")
-    public ResponseEntity deleteTvShow(@PathVariable("id") int id){
+    public ResponseEntity deleteTvShow(@PathVariable("id") String id){
         CustomizedResponse customResponse = null;
 
         try {

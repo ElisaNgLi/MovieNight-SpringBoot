@@ -11,7 +11,8 @@ import javax.validation.constraints.NotNull;
 public class Tv {
 
     @Id
-    private int id;
+    private String id;
+
     @NotBlank(message = "Enter a backdrop")
     private String backdrop_path;
 
@@ -31,15 +32,12 @@ public class Tv {
     private String release_date;
 
     @NotNull(message = "Enter a rating")
-    @Min(1)
     private double rating;
 
     @NotNull(message = "Enter a rent price")
-    @Min(1)
     private double rent;
 
     @NotNull(message = "Enter a purchase price")
-    @Min(1)
     private double buy;
 
     @NotBlank(message = "Enter a type")
@@ -50,7 +48,7 @@ public class Tv {
 
     public Tv(){}
 
-    public Tv(int id, String backdrop_path, String genre, String title, String overview, String poster_path, String release_date, double rating, double rent, double buy, String type, Boolean feature) {
+    public Tv(String id, String backdrop_path, String genre, String title, String overview, String poster_path, String release_date, double rating, double rent, double buy, String type, Boolean feature) {
         this.id = id;
         this.backdrop_path = backdrop_path;
         this.genre = genre;
@@ -65,11 +63,11 @@ public class Tv {
         this.feature = feature;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

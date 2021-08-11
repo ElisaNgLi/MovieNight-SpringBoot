@@ -1,6 +1,5 @@
 package com.example.restapimongodb.services;
 
-import com.example.restapimongodb.models.Movie;
 import com.example.restapimongodb.models.Tv;
 import com.example.restapimongodb.models.TvRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class TvService {
         return repository.findAll();
     }
 
-    public Optional<Tv> getTvByID(int id) throws Exception {
+    public Optional<Tv> getTvByID(String id) throws Exception {
         Optional<Tv> tv = repository.findById(id);
         if(!tv.isPresent()){
             throw new Exception("Tv Show " + id + " not found");
@@ -52,7 +51,7 @@ public class TvService {
         repository.insert(tv);
     }
 
-    public Tv updateTv(int id, Tv newTv) throws Exception {
+    public Tv updateTv(String id, Tv newTv) throws Exception {
         Optional<Tv> tv = repository.findById(id);
         if(!tv.isPresent()){
             throw new Exception("Tv Show " + id + " not found");
@@ -73,7 +72,7 @@ public class TvService {
         return updatedTvShow;
     }
 
-    public Optional<Tv> deleteTv(int id) throws Exception{
+    public Optional<Tv> deleteTv(String id) throws Exception{
         Optional<Tv> tv = repository.findById(id);
         if(!tv.isPresent()){
             throw new Exception("Tv Show " + id + " not found");

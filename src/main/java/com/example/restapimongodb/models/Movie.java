@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 public class Movie {
 
     @Id
-    private int id;
+    private String id;
 
     @NotBlank(message = "Enter a backdrop")
     private String backdrop_path;
@@ -51,7 +51,7 @@ public class Movie {
 
     public Movie(){}
 
-    public Movie(int id, String backdrop_path, String genre, String title, String overview, String poster_path, String release_date, double rating, double rent, double buy, String type, Boolean feature) {
+    public Movie(String id, String backdrop_path, String genre, String title, String overview, String poster_path, String release_date, double rating, double rent, double buy, String type, Boolean feature) {
         this.id = id;
         this.backdrop_path = backdrop_path;
         this.genre = genre;
@@ -66,11 +66,11 @@ public class Movie {
         this.feature = feature;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
