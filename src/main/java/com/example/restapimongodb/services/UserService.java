@@ -3,6 +3,8 @@ package com.example.restapimongodb.services;
 import com.example.restapimongodb.models.UserModel;
 import com.example.restapimongodb.models.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,12 +29,18 @@ public class UserService implements UserDetailsService {
         return repository.findAll();
     }
 
-    public Optional<UserModel> getUserById(int id) throws Exception{
+    public Optional<UserModel> getUserById(String id) throws Exception{
         Optional<UserModel> user = repository.findById(id);
         if(!user.isPresent()){
             throw new Exception("User " + id + " not found");
         }
         return user;
+    }
+
+    public Optional<UserModel> getUserByUsername(String username)
+    {
+        Optional<UserModel> findName = repository.findByUsername(username);
+        return findName;
     }
 
     public UserModel createUser(UserModel user){

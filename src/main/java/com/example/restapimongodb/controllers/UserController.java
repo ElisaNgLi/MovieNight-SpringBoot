@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Collections;
 
-
+@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 public class UserController {
 
@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity getUserByID(@PathVariable("id") int id){
+    public ResponseEntity getUserByID(@PathVariable("id") String id){
         CustomizedResponse customResponse = null;
         try {
             customResponse = new CustomizedResponse("User with id " + id, Collections.singletonList(service.getUserById(id)));
@@ -48,6 +48,10 @@ public class UserController {
             return new ResponseEntity(customResponse, HttpStatus.BAD_REQUEST);
         }
         try {
+            if(user.getLastName().length() < 2 || user.getFirstName().length() < 2 || user.getUsername().length() < 3 || user.getPasword().length() < 8){
+                customResponse = new CustomizedResponse("Fields doesnt meet the length requirement", null);
+                return new ResponseEntity(customResponse, HttpStatus.BAD_REQUEST);
+            }
             customResponse = new CustomizedResponse("Create a new user ", Collections.singletonList(service.createUser(user)));
         } catch (Exception e) {
             customResponse = new CustomizedResponse(e.getMessage(), null);

@@ -9,14 +9,12 @@ import javax.validation.constraints.NotBlank;
 public class UserModel {
 
     @Id
-    private int id;
+    private String id;
 
     @NotBlank(message = "Enter a last name")
-    @Min(2)
     private String lastName;
 
     @NotBlank(message = "Enter a first name")
-    @Min(2)
     private String firstName;
 
     @Email
@@ -24,7 +22,6 @@ public class UserModel {
     private String email;
 
     @NotBlank(message = "Enter a username")
-    @Min(3)
     private String username;
 
     @NotBlank()
@@ -35,7 +32,7 @@ public class UserModel {
 
     public UserModel(){}
 
-    public UserModel(int id, String lastName, String firstName, String email, String username, String pasword) {
+    public UserModel(String id, String lastName, String firstName, String email, String username, String pasword) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -45,11 +42,11 @@ public class UserModel {
         this.role = "user";
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -98,7 +95,7 @@ public class UserModel {
     }
 
     public void setRole(String role) {
-        this.role = role;
+        this.role = "user";
     }
 
     @Override
