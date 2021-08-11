@@ -12,7 +12,6 @@ public class Tv {
 
     @Id
     private String id;
-
     @NotBlank(message = "Enter a backdrop")
     private String backdrop_path;
 
@@ -32,12 +31,15 @@ public class Tv {
     private String release_date;
 
     @NotNull(message = "Enter a rating")
+    @Min(1)
     private double rating;
 
     @NotNull(message = "Enter a rent price")
+    @Min(1)
     private double rent;
 
     @NotNull(message = "Enter a purchase price")
+    @Min(1)
     private double buy;
 
     @NotBlank(message = "Enter a type")
